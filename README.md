@@ -1,11 +1,13 @@
 # Music Player 
 
+
 ### 🛠 사용 기술<br/>
 Editor: VScode<br/>
 Lang: HTML/CSS/JS
 
 **배포**:vercel
 
+https://playing-music.vercel.app/
 <br>
 
 ### 💻 기능 <br/>
