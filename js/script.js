@@ -3,23 +3,20 @@ const wrapper = document.querySelector('.wrapper'),
     musicName = wrapper.querySelector('.song-details .name'),
     musicArtist = wrapper.querySelector('.song-details .artist'),
     mainAudio = wrapper.querySelector('#main-audio'),
+    //
     playPauseBtn = wrapper.querySelector('.play-pause'),
     prevBtn = wrapper.querySelector('#prev'),
     nextBtn = wrapper.querySelector('#next'),
+    //
     progressArea = wrapper.querySelector('.progress-area'),
     progressBar = wrapper.querySelector('.progress-bar'),
+    //
     musicList = wrapper.querySelector('.music-list'),
     showMoreBtn = wrapper.querySelector('#more-music'),
     hideMusicBtn = musicList.querySelector('#close');
 
-showMoreBtn.addEventListener('click', () => {
-    musicList.classList.toggle('show');
-});
-hideMusicBtn.addEventListener('click', () => {
-    showMoreBtn.click();
-});
-
-let musicIndex = 1;
+let musicIndex = Math.floor(Math.random() * allMusic.length + 1);
+isMusicPaused = true;
 
 window.addEventListener('load', () => {
     loadMusic(musicIndex);
@@ -145,3 +142,56 @@ mainAudio.addEventListener('ended', () => {
             break;
     }
 });
+
+showMoreBtn.addEventListener('click', () => {
+    musicList.classList.toggle('show');
+});
+hideMusicBtn.addEventListener('click', () => {
+    showMoreBtn.click();
+});
+
+const ulTag = wrapper.querySelector('ul');
+
+for (let i = 0; i < allMusic.length; i++) {
+    let liTag = `<li li-index="${i + 1}>
+                    <div class="row">
+                        <span>${allMusic[i].name}</span>
+                            <p>${allMusic[i].artist}</p>
+                    </div>
+                    <span id="${
+                        allMusic[i].src
+                    }" class="audio-duration">0:00</span>
+                    <audio class="${allMusic[i].src}" src='songs/${
+        allMusic[i].src
+    }.mp3'></audio>
+                </li>`;
+    ulTag.insertAdjacentHTML('beforeend', liTag);
+
+    let liAudioDurationTag = ulTag.querySelector(`#${allMusic[i].src}`);
+    let liAudioTag = ulTag.querySelector(`.${allMusic[i].src}`);
+
+    liAudioTag.addEventListener('loadeddata', () => {
+        let audioDuration = liAudioTag.duration;
+        let totalMin = Math.floor(audioDuration / 60);
+        let totalSec = Math.floor(audioDuration % 60);
+        if (totalSec < 10) {
+            totalSec = `0${totalSec}`;
+        }
+        liAudioDurationTag.innerText = `${totalMin}:${totalSec}`;
+    });
+}
+
+const allLiTags = ulTag.querySelector('li');
+for (let j = 0; j < allLiTags.length; j++) {
+    if (allLiTags[j].getAttribute('li-index') == musicIndex) {
+        allLiTags[j].classList.add('playing');
+    }
+    allLiTags[j].setAttribute('onclick', 'clicked(this)');
+}
+
+function clicked(element) {
+    let getLiIndex = element.getAttribute('li-index');
+    musicIndex = getLiIndex;
+    loadMusic(musicIndex);
+    playMusic();
+}
