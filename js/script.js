@@ -7,7 +7,17 @@ const wrapper = document.querySelector('.wrapper'),
     prevBtn = wrapper.querySelector('#prev'),
     nextBtn = wrapper.querySelector('#next'),
     progressArea = wrapper.querySelector('.progress-area'),
-    progressBar = wrapper.querySelector('.progress-bar');
+    progressBar = wrapper.querySelector('.progress-bar'),
+    musicList = wrapper.querySelector('.music-list'),
+    showMoreBtn = wrapper.querySelector('#more-music'),
+    hideMusicBtn = musicList.querySelector('#close');
+
+showMoreBtn.addEventListener('click', () => {
+    musicList.classList.toggle('show');
+});
+hideMusicBtn.addEventListener('click', () => {
+    showMoreBtn.click();
+});
 
 let musicIndex = 1;
 
