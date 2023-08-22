@@ -8,12 +8,14 @@
     font-style: normal;
 }
 @font-face {
-    font-family: 'intelone-mono-font-family-regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/intelone-mono-font-family-regular.woff2')
+    font-family: 'HakgyoansimWoojuR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2')
         format('woff2');
-    font-weight: 400;
+    font-weight: normal;
     font-style: normal;
 }
+
+/* ************************************************************************************ */
 
 * {
     margin: 0;
@@ -44,6 +46,8 @@ body {
 }
 .wrapper {
     width: 380px;
+    overflow: hidden;
+    position: relative;
     border-radius: 15px;
     padding: 25px 30px;
     background: var(--white);
@@ -54,7 +58,9 @@ body {
 }
 .top-bar,
 .progress-area .timer,
-.controls {
+.controls,
+.music-list .header,
+.music-list li {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -87,13 +93,16 @@ body {
     color: var(--lightBlack);
 }
 .song-details .name {
-    font-size: 21px;
-    font-family: 'intelone-mono-font-family-regular';
+    font-size: 23px;
+    font-family: 'HakgyoansimWoojuR';
+    font-weight: 600;
 }
+
 .song-details .artist {
     margin-top: 8px;
-    font-size: 16px;
-    font-family: 'intelone-mono-font-family-regular';
+    font-size: 20px;
+    font-family: 'HakgyoansimWoojuR';
+    font-weight: 500;
     opacity: 0.9;
 }
 
@@ -186,4 +195,70 @@ body {
     position: relative;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+.music-list {
+    position: absolute;
+    left: 0;
+    bottom: -55%;
+    opacity: 0;
+    pointer-events: none;
+    width: 100%;
+    padding: 15px 30px;
+    border-radius: 15px;
+    background: var(--white);
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.14s ease-out;
+}
+.music-list.show {
+    bottom: 0;
+    opacity: 1;
+    pointer-events: auto;
+}
+.music-list .header .row {
+    display: flex;
+    align-items: center;
+    font-size: 19px;
+    color: var(--lightBlack);
+}
+.header .row i {
+    cursor: default;
+}
+.header .row span {
+    margin-left: 5px;
+    font-family: 'IAMAPLAYER';
+}
+.header #close {
+    font-size: 22px;
+    color: var(--lightBlack);
+}
+.music-list ul {
+    margin: 10px 0;
+    max-height: 260px;
+    overflow-y: auto;
+}
+.music-list ul::-webkit-scrollbar {
+    width: 0px;
+}
+.music-list ul li {
+    cursor: pointer;
+    list-style: none;
+    padding-bottom: 15px;
+    margin-bottom: 5px;
+    color: var(--lightBlack);
+    font-family: 'HakgyoansimWoojuR';
+    border-bottom: 1px solid #e5e5e5;
+}
+.music-list ul li:last-child {
+    border-bottom: 0px;
+}
+.music-list ul li .row span {
+    font-size: 17px;
+}
+ul li .row p {
+    margin-top: 10px;
+    opacity: 0.9;
+}
+ul li .audio-duration {
+    font-size: 16px;
+    font-family: 'IAMAPLAYER';
 }
