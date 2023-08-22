@@ -20,4 +20,5 @@ https://playing-music.vercel.app/
 
 ---
 ### 👀 미리보기<br/>
-![player](https://github.com/sub2nee/Music_Player/assets/121946266/1a9e3006-e7a1-41e7-ae05-b9364ba4b3bb)
+
+![player](https://github.com/sub2nee/Music_Player/assets/121946266/dec5ea09-c19e-4148-a55d-c61044206d54)
