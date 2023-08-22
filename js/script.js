@@ -20,6 +20,7 @@ isMusicPaused = true;
 
 window.addEventListener('load', () => {
     loadMusic(musicIndex);
+    playingNow();
 });
 
 function loadMusic(indexNumb) {
@@ -99,6 +100,7 @@ progressArea.addEventListener('click', e => {
 
     mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
     playMusic();
+    playingNow();
 });
 
 const repeatBtn = wrapper.querySelector('#repeat-plist');
@@ -128,7 +130,7 @@ mainAudio.addEventListener('ended', () => {
             break;
         case 'repeat_one':
             mainAudio.currentTime = 0;
-            loadMusic(indexNumb);
+            loadMusic(musicIndex);
             playMusic();
             break;
         case 'shuffle':
@@ -139,6 +141,7 @@ mainAudio.addEventListener('ended', () => {
             musicIndex = randIndex;
             loadMusic(musicIndex);
             playMusic();
+            playingNow();
             break;
     }
 });
@@ -178,15 +181,29 @@ for (let i = 0; i < allMusic.length; i++) {
             totalSec = `0${totalSec}`;
         }
         liAudioDurationTag.innerText = `${totalMin}:${totalSec}`;
+        liAudioDurationTag.setAttribute =
+            ('t-duration', `${totalMin}:${totalSec}`);
     });
 }
 
-const allLiTags = ulTag.querySelector('li');
-for (let j = 0; j < allLiTags.length; j++) {
-    if (allLiTags[j].getAttribute('li-index') == musicIndex) {
-        allLiTags[j].classList.add('playing');
+function playingNow() {
+    const allLiTags = ulTag.querySelector('li');
+
+    for (let j = 0; j < allLiTags.length; j++) {
+        let audioTag = allLiTags[j].querySelector('.audio-duration');
+
+        if (allLiTags[j].classList.contains('playing')) {
+            allLiTags[j].classList.remove('playing');
+            let adDuration = audioTag.getAttribute('t-duration');
+            audioTag.innerText = adDuration;
+        }
+
+        if (allLiTags[j].getAttribute('li-index') == musicIndex) {
+            allLiTags[j].classList.add('playing');
+            audioTag.innerText = 'Playing';
+        }
+        allLiTags[j].setAttribute('onclick', 'clicked(this)');
     }
-    allLiTags[j].setAttribute('onclick', 'clicked(this)');
 }
 
 function clicked(element) {
@@ -194,4 +211,5 @@ function clicked(element) {
     musicIndex = getLiIndex;
     loadMusic(musicIndex);
     playMusic();
+    playingNow();
 }
